@@ -3,10 +3,14 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | My project (1)</title>
+    <title>Tom Gravity</title>
+    <style>body {font-family: "verdana";}</style>
   </head>
   <body style="text-align: center">
-    <canvas id="unity-canvas" width=1920 height=1080 style="width: 1920px; height: 1080px; background: #1F1F20"></canvas>
+    <div style="padding:4em">
+        <h1>Gravity Sim C#</h1>
+    </div>
+    <canvas id="unity-canvas" width=700 height=1080 style="width: 100%; height: 60vw; max-height: 70vh;   background: #1F1F20"></canvas>
     
     <div style="">
         <h4>Planets Velocity</h4>
@@ -44,70 +48,6 @@
       });
 
       function changeGravity(val) {
-            document.getElementById("gravityValueText").innerHTML = val
-            window.unityInstance.SendMessage('Sphere1','changeGravity', -val)
-            window.unityInstance.SendMessage('Sphere2','changeGravity', -val)
-
-        }
-
-        function resetGravity() {
-            document.getElementById("gravityRange").value = 6
-            changeGravity(6)
-            
-        }
-    </script>
-  </body>
-</html>
-
-<!DOCTYPE html>
-<html lang="en-us">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | My project (1)</title>
-  </head>
-  <body style="text-align: center">
-
-    <canvas id="unity-canvas" width=1920 height=1080 style="width: 1920px; height: 1080px; background: #1F1F20"></canvas>
-
-    <div style="">
-        <h4>Planets Velocity</h4>
-        <button onclick="window.unityInstance.SendMessage('Sphere1','faster',1)">Increase</button>
-        <button onclick="window.unityInstance.SendMessage('Sphere1','faster',-1)">Decrease</button>
-        
-        <h4>Gravitational Strength</h4>
-        <input style="width:50%" type="range" min="-50" max="50" value="6" id="gravityRange" oninput="changeGravity(this.value)">
-        <p id="gravityValueText">6</p>
-        <button onclick="resetGravity()">Reset</button>
-    </div>
-
-    <script src="Build/builds2.loader.js"></script>
-
-    <script>
-
-      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        // Mobile device style: fill the whole browser client area with the game canvas:
-        var meta = document.createElement('meta');
-        meta.name = 'viewport';
-        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
-        document.getElementsByTagName('head')[0].appendChild(meta);
-      }
-
-      createUnityInstance(document.querySelector("#unity-canvas"), {
-        dataUrl: "Build/builds2.data.br",
-        frameworkUrl: "Build/builds2.framework.js.br",
-        codeUrl: "Build/builds2.wasm.br",
-        streamingAssetsUrl: "StreamingAssets",
-        companyName: "DefaultCompany",
-        productName: "My project (1)",
-        productVersion: "1.0",
-        // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
-        // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
-        }).then((unityInstance) => {
-        window.unityInstance = unityInstance;
-      });
-
-        function changeGravity(val) {
             document.getElementById("gravityValueText").innerHTML = val
             window.unityInstance.SendMessage('Sphere1','changeGravity', -val)
             window.unityInstance.SendMessage('Sphere2','changeGravity', -val)
