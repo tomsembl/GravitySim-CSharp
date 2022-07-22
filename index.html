@@ -1,21 +1,27 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Tom Gravity</title>
-    <style>body {font-family: "verdana"; color: white; background-color: rgb(30,30,30);}</style>
-  </head>
-  <body style="text-align: center">
-    <div style="padding:4em">
+    <style>
+        body {
+            font-family: "verdana";
+            color: white;
+            background-color: rgb(30,30,30);
+        }
+    </style>
+</head>
+<body style="text-align: center">
+    <div style="padding:2em">
         <h1>Gravity Sim C#</h1>
     </div>
-    <canvas id="unity-canvas" width=700 height=1080 style="width: 100%; height: 60vw; max-height: 70vh;   background: #1F1F20"></canvas>
-    
+    <canvas id="unity-canvas" width=700 height=1080 style="width: 100%; height: 70vw; max-height: 80vh;   background: #1F1F20"></canvas>
+
     <div style="">
         <h4>Planets Velocity</h4>
-        <button onclick="window.unityInstance.SendMessage('Sphere1','faster',1)">Increase</button>
-        <button onclick="window.unityInstance.SendMessage('Sphere1','faster',-1)">Decrease</button>
+        <button onclick="window.unityInstance.SendMessage('Sphere1', 'faster', 1);playifnot()">Increase</button>
+        <button onclick="window.unityInstance.SendMessage('Sphere1', 'faster', -1);playifnot()">Decrease</button>
 
         <h4>Gravitational Strength</h4>
         <input style="width:50%" type="range" min="-50" max="50" value="6" id="gravityRange" oninput="changeGravity(this.value)">
@@ -27,35 +33,74 @@
         <p id="FOVValueText">60</p>
         <button onclick="resetFOV()">Reset</button>
     </div>
-    
+
     <script src="Build/builds5.loader.js"></script>
     <script>
         if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        // Mobile device style: fill the whole browser client area with the game canvas:
-        var meta = document.createElement('meta');
-        meta.name = 'viewport';
-        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
-        document.getElementsByTagName('head')[0].appendChild(meta);
+            // Mobile device style: fill the whole browser client area with the game canvas:
+            var meta = document.createElement('meta');
+            meta.name = 'viewport';
+            meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+            document.getElementsByTagName('head')[0].appendChild(meta);
         }
 
         createUnityInstance(document.querySelector("#unity-canvas"), {
-        dataUrl: "Build/builds5.data.unityweb",
-        frameworkUrl: "Build/builds5.framework.js.unityweb",
-        codeUrl: "Build/builds5.wasm.unityweb",
-        streamingAssetsUrl: "StreamingAssets",
-        companyName: "DefaultCompany",
-        productName: "My project (1)",
-        productVersion: "1.0",
-        // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
-        // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
+            dataUrl: "Build/builds5.data.unityweb",
+            frameworkUrl: "Build/builds5.framework.js.unityweb",
+            codeUrl: "Build/builds5.wasm.unityweb",
+            streamingAssetsUrl: "StreamingAssets",
+            companyName: "DefaultCompany",
+            productName: "My project (1)",
+            productVersion: "1.0",
+            // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
+            // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
         }).then((unityInstance) => {
-        window.unityInstance = unityInstance;
+            window.unityInstance = unityInstance;
         });
 
+
+        audiolist = ["https://t4.bcbits.com/stream/6fd334f5f3e9468e04d829e0b0971710/mp3-128/3262730118?p=0&ts=1658585324&t=b0400b0c2b898c13c58d1ed9134c9fae1e154c3f&token=1658585324_e2db6bcdb27bd3724d63c8112837594c9741c511",
+            "https://t4.bcbits.com/stream/855f31a5746570bcce844085e3ec6f41/mp3-128/562730021?p=0&ts=1658585324&t=db078fcae772699d374ea464a796287b1d316e44&token=1658585324_8f8628859692936d9bdceff31d8a1c02ef37a0db",
+            "https://t4.bcbits.com/stream/b4780a48d6e0ae9793ecaa47cbd436d5/mp3-128/2116021835?p=0&ts=1658585324&t=a0660c6551cf8a8a9408adaec3fcc4c18130cf2b&token=1658585324_46e5b64191b4c8c6a08bdea3eb06cf78ba8795f6",
+            "https://t4.bcbits.com/stream/8e797c679662811d8a7428f3eb4ed82c/mp3-128/3941957152?p=0&amp;ts=1658589310&amp;t=c34241afbf2d4b7ed71b274b5d529bfa0313a2a1&amp;token=1658589310_31e5d0ca2f522d0b68e9084d4e98bb92b55fc4d6&quot;",
+            "https://t4.bcbits.com/stream/2cdd0605eaac24e6da1a3d07e8a96f24/mp3-128/2198659522?p=0&amp;ts=1658589310&amp;t=d7c5f6342bc30ea8dabe895702364511067afa3e&amp;token=1658589310_3539db25469ca8bc07e67920f046752053ae08e1&quot;",
+            "https://t4.bcbits.com/stream/f5c8b3006da7f794644d0d17de18b0cf/mp3-128/4278870579?p=0&amp;ts=1658589310&amp;t=5fdcac37d7fdd4e2d0f95dbe49601d413f92ff80&amp;token=1658589310_3e48d8f59247f510059bf38cdf310df8c5577940&quot;",
+            "https://t4.bcbits.com/stream/3cf87b9028cd90e6232a553bfb28f16a/mp3-128/3411101846?p=0&amp;ts=1658589310&amp;t=08bb0f504536538f9cc900bce61ec6bb761ace85&amp;token=1658589310_c1e3a28fc8d181a3db5981524f4d5ec813f204e6&quot;",
+            "https://t4.bcbits.com/stream/242f0f2eb8b3ffaa249eab626d78c91d/mp3-128/2113917290?p=0&amp;ts=1658589310&amp;t=cbe199e4d6b74869dd643c0127be77c7b7c21077&amp;token=1658589310_8da8b94905ba6353ab3367e65780d751b1624ed4&quot;",
+            "https://t4.bcbits.com/stream/c65a6e05dd1b15032588218fe29ca3e9/mp3-128/4018572971?p=0&amp;ts=1658591372&amp;t=658aadb3b0031765993add69b80e807855dbd1dc&amp;token=1658591372_ca783318f77e0f475a3cb5477e278102570171f2&quot;",
+            "https://t4.bcbits.com/stream/8d2c0f001dcf4395f48627df44f31947/mp3-128/3968405634?p=0&amp;ts=1658591372&amp;t=798135f976f006ccbe7a4648b2be5e0fd726361c&amp;token=1658591372_7bffd22736ac735b522adfef6bd260d7ed348a91&quot;",
+            "https://t4.bcbits.com/stream/7323425017f17218d394291b2f393ffd/mp3-128/1088350644?p=0&amp;ts=1658591372&amp;t=64473472abc54fc3f1cc06a05fea88f1190d1f86&amp;token=1658591372_484ef59d399cb4f782875b38804cfa44c951187b&quot;",
+            "https://t4.bcbits.com/stream/6e7e60be2dee253c6aaa9cee8f1b06a0/mp3-128/1831473635?p=0&amp;ts=1658591372&amp;t=a19864b21ed722f57689648e2aca1d7cb435b76d&amp;token=1658591372_39bea8614a6b58789a92e464eeb5fdf60bc80a12&quot;",
+            "https://t4.bcbits.com/stream/8ddcd6ea5dccd3e4a98d85d3f0f6e289/mp3-128/2048867403?p=0&amp;ts=1658591984&amp;t=505365439d0a793a9d703f4fe4ad313058d0de1c&amp;token=1658591984_106526297182868cc5b5e253e3969af1d8604c47&quot;",
+            "https://t4.bcbits.com/stream/3ef650f0d2c07cd924d7ddfaa69e2f2d/mp3-128/1932782713?p=0&amp;ts=1658591984&amp;t=a34cdcb5ef012a48bb3e8cbc6e3059608d2e28bf&amp;token=1658591984_1ed9a332d0fc33800c17767a0a3602950d470cf9&quot;",]
+
+
+
+        var audio1
+        function getsong() {
+            rng = Math.floor(Math.random() * audiolist.length);
+            audio1 = new Audio(audiolist[rng])
+            audio1.addEventListener('ended', function () {
+                getsong(); audio1.play()
+            })
+        }
+        getsong()
+        
+
+
+        function playifnot (){
+            if (!audio1.played.length) {
+                audio1.play()
+            }
+        }
+
+        document.getElementById("unity-canvas").addEventListener(onclick, playifnot)
+
         function changeGravity(val) {
+            playifnot()
             document.getElementById("gravityValueText").innerHTML = val
-            window.unityInstance.SendMessage('Sphere1','changeGravity', -val)
-            window.unityInstance.SendMessage('Sphere2','changeGravity', -val)
+            window.unityInstance.SendMessage('Sphere1', 'changeGravity', -val)
+            window.unityInstance.SendMessage('Sphere2', 'changeGravity', -val)
         }
 
         function resetGravity() {
@@ -64,6 +109,7 @@
         }
 
         function changeFOV(val) {
+            playifnot()
             document.getElementById("FOVValueText").innerHTML = val
             window.unityInstance.SendMessage('Main Camera', 'changeFOV', parseInt(val))
         }
@@ -73,5 +119,5 @@
             changeFOV(60)
         }
     </script>
-  </body>
+</body>
 </html>
