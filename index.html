@@ -67,8 +67,8 @@
         <div style="padding:2em">
             <h1>Gravity Sim C#</h1>
             <p>
-                <strong>Goal:</strong> Reach 100% moon escape velocity using a gravity assist.
-                <br>The moon will need to steal some momentum from the earth to slingshot out and escape Jupiter.<br>
+                <strong>Goal:</strong> Reach 100% escape velocity using a gravity assist.
+                <br>To slingshot out and escape Jupiter, the Moon will need to steal some momentum from the Earth or vice versa.<br>
                 <strong>Rules:</strong> Once you increase the Gravitational Strength, you can't lower it.<br>There are a finite number of Planet Velocity Increases avaiable.
             </p>
         </div>
@@ -86,7 +86,7 @@
                 <h4>Gravitational Strength</h4>
                 <h4 id="gravityValueText">6</h4>
                 <button onclick="changeGravity(1)">Increase</button>
-                <button onclick="changeGravity(-1)" disabled>Increase</button>
+                <button onclick="changeGravity(-1)" disabled>Decrease</button>
                 <button onclick="resetGravity()" disabled>Reset</button>
             </div>
             <div class="horizontal">
@@ -233,9 +233,17 @@
 
         function changeVelocity(velocityChange) {
             window.unityInstance.SendMessage('Sphere1', 'faster', velocityChange); playifnot()
-            velRaises -= velocityChange
+            if (!velRaises) {
+                velRaises = 1
+            } else if (velocityChange===-1) {
+                velRaises = 1
+            } else { velRaises = 0}
             increaseButton = document.getElementById("increase")
-            if (!velRaises) { increaseButton.disabled = true } else { increaseButton.disabled = false }
+            if (!velRaises) {
+                increaseButton.disabled = true
+            } else {
+                increaseButton.disabled = false
+            }
             increaseButton.innerHTML = `Increase (${velRaises})`
         }
     </script>
