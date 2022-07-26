@@ -52,8 +52,8 @@
         </div>
         <div class="vertical">
             <div class="horizontal centered">
-                <button onclick="changeView()">Toggle View</button>
-                <button onclick="window.unityInstance.SendMessage('Main Camera', 'reset')">Restart</button>
+                <button onclick="changeView();playifnot()">Toggle View</button>
+                <button onclick="window.unityInstance.SendMessage('Main Camera', 'reset');playifnot()">Restart</button>
                 <h4>&nbsp;</h4>
             </div>
             <div class="horizontal centered">
@@ -132,10 +132,10 @@
             document.getElementById("unity-canvas").addEventListener(onclick, playifnot)
 
             function changeGravity(val) {
-                playifnot()
-                document.getElementById("gravityValueText").innerHTML = val
                 window.unityInstance.SendMessage('Sphere1', 'changeGravity', -val)
                 window.unityInstance.SendMessage('Sphere2', 'changeGravity', -val)
+                document.getElementById("gravityValueText").innerHTML = val
+                playifnot()
             }
 
             function resetGravity() {
@@ -144,9 +144,9 @@
             }
 
             function changeFOV(val) {
-                playifnot()
-                document.getElementById("FOVValueText").innerHTML = val
                 window.unityInstance.SendMessage('Main Camera', 'changeFOV', parseInt(val))
+                document.getElementById("FOVValueText").innerHTML = val
+                playifnot()
             }
 
             function resetFOV() {
@@ -155,6 +155,7 @@
             }
 
             function changeView() {
+                playifnot()
                 currentPlanet = (currentPlanet + 1) % 3
                 window.unityInstance.SendMessage('Main Camera', 'changeView', `${currentPlanet + 1}`)
             }
