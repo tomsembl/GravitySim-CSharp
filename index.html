@@ -150,6 +150,7 @@
         var playlist = []
         const trackCount = audiolist1.length + audiolist2.length
         var currentTrack = 0
+        var currentGravity = 6
         var currentPlanet = 0
         var velRaises = 1
 
@@ -179,10 +180,15 @@
         document.getElementById("unity-canvas").addEventListener(onclick, playifnot)
 
         function changeGravity(val) {
-            window.unityInstance.SendMessage('Sphere1', 'changeGravity', -val)
-            window.unityInstance.SendMessage('Sphere2', 'changeGravity', -val)
-            document.getElementById("gravityValueText").innerHTML = val
-            document.getElementById("gravityRange").min = val
+            if (val < currentGravity) {document.getElementById("gravityRange").value = currentGravity}
+            else {
+                window.unityInstance.SendMessage('Sphere1', 'changeGravity', -val)
+                window.unityInstance.SendMessage('Sphere2', 'changeGravity', -val)
+                document.getElementById("gravityValueText").innerHTML = val
+                document.getElementById("gravityRange").min = val
+                currentGravity = val
+            }
+            
             playifnot()
         }
 
