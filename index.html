@@ -15,7 +15,7 @@
         .horizontal {
             display: flex;
             flex-direction: row;
-            margin-block: 1em;
+            margin-block: 1.3em;
         }
 
         h4 {
@@ -48,10 +48,18 @@
         .centered {
             justify-content: center;
         }
-
-        .justified {
-            justify-content: space-evenly;
-            margin: 0
+        @media screen and (orientation: portrait) {
+            .justified {
+                flex-direction: column-reverse !important;
+                justify-content: space-evenly;
+                margin: 0
+            }
+        }
+        @media screen and (orientation: landscape) {
+            .justified {
+                justify-content: space-evenly;
+                margin: 0
+            }
         }
 
         .vertical {
@@ -89,13 +97,14 @@
                 <button onclick="changeGravity(-1)" disabled>Decrease</button>
                 <button onclick="resetGravity()" disabled>Reset</button>
             </div>
-            <div class="horizontal">
+            <!--<div class="horizontal">
                 <h4>Camera FOV</h4>
                 <h4 id="FOVValueText">60</h4>
                 <input style="width:50%" type="range" min="0" max="180" value="60" id="FOVrange" oninput="changeFOV(this.value)">
                 <button onclick="resetFOV()">Reset</button>
-            </div>
+            </div>-->
             <div class="horizontal">
+                <h4>Music Controls</h4>
                 <button onclick="audio1.pause();prevsong()">⏮</button>
                 <button onclick="playPause()" id="playPause">▶ 𝄞</button>
                 <button onclick="audio1.pause();nextsong()">⏭</button>
