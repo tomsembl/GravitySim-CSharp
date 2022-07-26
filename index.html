@@ -40,6 +40,10 @@
             background-color: rgb(45,45,45);
             color: rgb(200,200,200);
         }
+        button:disabled {
+            background-color: rgb(100,100,100);
+            color: rgb(150,150,150);
+        }
 
         .centered {
             justify-content: center;
@@ -62,7 +66,11 @@
     <div class="horizontal justified">
         <div style="padding:2em">
             <h1>Gravity Sim C#</h1>
-            <p><strong>Goal:</strong> Reach 100% moon escape velocity using a gravity assist.<br>The moon will need to steal some momentum from the earth to slingshot out and escape Jupiter.</p>
+            <p>
+                <strong>Goal:</strong> Reach 100% moon escape velocity using a gravity assist.
+                <br>The moon will need to steal some momentum from the earth to slingshot out and escape Jupiter.<br>
+                <strong>Rules:</strong> Once you increase the Gravitational Strength, you can't lower it.<br>There are a finite number of Planet Velocity Increases avaiable.
+            </p>
         </div>
         <div class="vertical">
             <div class="horizontal">
@@ -79,7 +87,7 @@
                 <h4 id="gravityValueText">6</h4>
                 <input style="width:50%" type="range" min="6" max="50" value="6" id="gravityRange" oninput="changeGravity(this.value)">
                 <!╌ old grav <input style="width:50%" type="range" min="-50" max="50" value="6" id="gravityRange" oninput="changeGravity(this.value)">
-                <button onclick="resetGravity()">Reset</button>
+                <button onclick="resetGravity()" disabled>Reset</button>
             </div>
             <div class="horizontal">
                 <h4>Camera FOV</h4>
@@ -174,10 +182,12 @@
             window.unityInstance.SendMessage('Sphere1', 'changeGravity', -val)
             window.unityInstance.SendMessage('Sphere2', 'changeGravity', -val)
             document.getElementById("gravityValueText").innerHTML = val
+            document.getElementById("gravityRange").min = val
             playifnot()
         }
 
         function resetGravity() {
+            document.getElementById("gravityRange").min = 6
             document.getElementById("gravityRange").value = 6
             changeGravity(6)
         }
