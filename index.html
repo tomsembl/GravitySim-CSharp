@@ -235,11 +235,13 @@
             window.unityInstance.SendMessage('Main Camera', 'reset');
             currentGravity = 6
             playifnot()
-            resetGravity()
+            document.getElementById("gravityRange").min = 6
+            document.getElementById("gravityRange").value = 6
             resetFOV()
             increaseButton = document.getElementById("increase")
-            increaseButton.innerHTML = `Increase (${velRaises})`
             velRaises = 1
+            increaseButton.innerHTML = `Increase (${velRaises})`
+            
         }
 
         function changeVelocity(velocityChange) {
