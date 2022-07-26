@@ -85,8 +85,8 @@
             <div class="horizontal">
                 <h4>Gravitational Strength</h4>
                 <h4 id="gravityValueText">6</h4>
-                <input style="width:50%" type="range" min="6" max="50" value="6" id="gravityRange" oninput="changeGravity(this.value)">
-                <!╌ old grav <input style="width:50%" type="range" min="-50" max="50" value="6" id="gravityRange" oninput="changeGravity(this.value)">
+                <button onclick="changeGravity(1)">Increase</button>
+                <button onclick="changeGravity(-1)" disabled>Increase</button>
                 <button onclick="resetGravity()" disabled>Reset</button>
             </div>
             <div class="horizontal">
@@ -180,22 +180,11 @@
         document.getElementById("unity-canvas").addEventListener(onclick, playifnot)
 
         function changeGravity(val) {
-            if (val < currentGravity) {document.getElementById("gravityRange").value = currentGravity}
-            else {
-                window.unityInstance.SendMessage('Sphere1', 'changeGravity', -val)
-                window.unityInstance.SendMessage('Sphere2', 'changeGravity', -val)
-                document.getElementById("gravityValueText").innerHTML = val
-                document.getElementById("gravityRange").min = val
-                currentGravity = val
-            }
-            
+            currentGravity += val
+            window.unityInstance.SendMessage('Sphere1', 'changeGravity', -currentGravity)
+            window.unityInstance.SendMessage('Sphere 2', 'changeGravity', -currentGravity)
+            document.getElementById("gravityValueText").innerHTML = currentGravity
             playifnot()
-        }
-
-        function resetGravity() {
-            document.getElementById("gravityRange").min = 6
-            document.getElementById("gravityRange").value = 6
-            changeGravity(6)
         }
 
         function changeFOV(val) {
@@ -231,18 +220,15 @@
             }
             else { audio1.currentTime = 0 }
         }
-        function resetGame(){
+        function resetGame() {
             window.unityInstance.SendMessage('Main Camera', 'reset');
-            currentGravity = 6
             playifnot()
-            document.getElementById("gravityRange").min = 6
-            document.getElementById("gravityRange").value = 6
-            document.getElementById("gravityValueText").innerHTML = 6
+            currentGravity = 6
+            document.getElementById("gravityValueText").innerHTML = currentGravity
             resetFOV()
-            increaseButton = document.getElementById("increase")
             velRaises = 1
-            increaseButton.innerHTML = `Increase (${velRaises})`
-            
+            document.getElementById("increase").innerHTML = `Increase (${velRaises})`
+            document.getElementById("increase").disabled = false
         }
 
         function changeVelocity(velocityChange) {
