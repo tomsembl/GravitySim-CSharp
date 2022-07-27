@@ -227,7 +227,10 @@
                 getsong()
                 playifnot()
             }
-            else { audio1.currentTime = 0 }
+            else { 
+                audio1.currentTime = 0
+                audio1.play()
+            }
         }
         function resetGame() {
             window.unityInstance.SendMessage('Main Camera', 'reset');
