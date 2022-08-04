@@ -239,11 +239,13 @@
             window.unityInstance.SendMessage('Main Camera', 'reset');
             playifnot()
             currentGravity = 6
+            currentPlanet = 0
             document.getElementById("gravityValueText").innerHTML = currentGravity
             resetFOV()
             velRaises = 1
             document.getElementById("increase").innerHTML = `Increase (${velRaises})`
             document.getElementById("increase").disabled = false
+
         }
 
         function changeVelocity(velocityChange) {
