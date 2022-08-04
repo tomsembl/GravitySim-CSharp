@@ -48,6 +48,10 @@
         .centered {
             justify-content: center;
         }
+        .music-text{
+            font-size: 0.5em;
+            margin: 0
+        }
         @media screen and (orientation: portrait) {
             .justified {
                 flex-direction: column-reverse !important;
@@ -109,7 +113,7 @@
                 <button onclick="audio1.pause();prevsong()">⏮</button>
                 <button onclick="playPause()" id="playPause">▶ 𝄞</button>
                 <button onclick="audio1.pause();nextsong()">⏭</button>
-                <p id="musicText"></p>
+                <p id="musicText" class="music-text"></p>
             </div>
         </div>
     </div>
