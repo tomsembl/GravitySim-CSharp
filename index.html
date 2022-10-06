@@ -180,7 +180,7 @@
             isPlaying = false
             audio1 = new Audio(playlist[currentTrack])
             audio1.addEventListener('ended', function () { nextsong() })
-            document.getElementById("musicText").innerHTML = playlist[currentTrack]
+            document.getElementById("musicText").innerHTML = playlist[currentTrack].replace("/",": "
         }
         while (trackCount > playlist.length) { addToPlaylist() }
         getsong()
